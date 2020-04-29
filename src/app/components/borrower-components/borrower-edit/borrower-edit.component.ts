@@ -36,7 +36,6 @@ export class BorrowerEditComponent implements OnInit {
   }
 
   updateCardNumber(borrowerId: number, cardNumber: number) {
-    console.log(borrowerId, cardNumber);
     this.liblaryRestService.updateBorrowerCardNumber(borrowerId, cardNumber).subscribe(res => {
       if (res.status == 200) {
         this.showAndCloseSuccessMessage();

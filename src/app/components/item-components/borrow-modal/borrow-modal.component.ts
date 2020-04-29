@@ -18,7 +18,7 @@ export class BorrowModalComponent implements OnInit {
   selectedBorrowerId: number;
   infoMessage: string;
   isSuccess;
-  
+
   constructor(private modalService: NgbModal, private liblaryRestService: LiblaryRestService) { }
 
   ngOnInit(): void {

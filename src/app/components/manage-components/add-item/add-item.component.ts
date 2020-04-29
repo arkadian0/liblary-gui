@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
 import { BookDto, NewspaperDto } from 'src/app/services/transfer/transfer-interfaces';
-
+import { ItemType } from 'src/app/enums/item-type-enum';
+import { PediodType } from 'src/app/enums/period-type-enum';
+import { TemplateBook } from 'src/app/models/book.template';
+import { TemplateNewspaper } from 'src/app/models/item.template';
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
@@ -20,8 +23,8 @@ export class AddItemComponent implements OnInit {
     { id: PediodType.MONTHLY }
   ]
 
-  templateBook = new TemplateBook;
-  templateNewspaper = new TemplateNewspaper;
+  templateBook = <TemplateBook>{};
+  templateNewspaper = <TemplateNewspaper>{};
   showBookForm = false;
   showNewspaperForm = false;
 
@@ -97,36 +100,6 @@ export class AddItemComponent implements OnInit {
   }
 }
 
-enum ItemType {
-  BOOK = 0,
-  NEWSPAPER = 1,
-}
-
-enum PediodType {
-  DIARY = "DIARY",
-  WEEKLY = "WEEKLY",
-  MONTHLY = "MONTHLY",
-}
 
 
-class TemplateBook {
-  constructor(public title?: string,
-    public format?: string,
-    public publishingHouse?: string,
-    public pageLength?: number,
-    public releaseDate?: Date,
-    public numberOfChapters?: number,
-    public authorFirstName?: string,
-    public authorLastName?: string
-  ) { }
-}
 
-class TemplateNewspaper {
-  constructor(public title?: string,
-    public format?: string,
-    public publishingHouse?: string,
-    public pageLength?: number,
-    public releaseDate?: Date,
-    public periodicType?: PediodType,
-  ) { }
-}

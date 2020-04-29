@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
 import { BorrowerDto } from 'src/app/services/transfer/transfer-interfaces';
+import { TemplateBorrower } from 'src/app/models/borrower.template';
 
 @Component({
   selector: 'app-add-borrower',
@@ -9,7 +10,7 @@ import { BorrowerDto } from 'src/app/services/transfer/transfer-interfaces';
 })
 export class AddBorrowerComponent implements OnInit {
 
-  templateBorrower = new TemplateBorrower;
+  templateBorrower = <TemplateBorrower>{};;
   isSuccess = false;
   infoMessage;
 
@@ -43,12 +44,4 @@ export class AddBorrowerComponent implements OnInit {
     borrowerDto.lastName = templateBorrower.lastName;
     return borrowerDto;
   }
-
-}
-
-class TemplateBorrower {
-  constructor(public firstName?: string,
-    public lastName?: string,
-    public cardNumber?: number
-  ) { }
 }
