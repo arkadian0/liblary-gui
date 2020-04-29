@@ -1,0 +1,23 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Borrow {{item.title}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <ng-select required [items]="borrowers" bindLabel="firstName" bindValue="borrowerId" [(ngModel)]="selectedBorrowerId" name="userSelect" placeholder="Choose borrower">
+            <ng-template ng-label-tmp let-item="item">
+                {{item.firstName}} {{item.lastName}} ({{item.cardNumber}})
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                {{item.borrowerId}}. {{item.firstName}} {{item.lastName}} ({{item.cardNumber}})
+            </ng-template>
+        </ng-select>
+        <p [ngClass]="{'msg-success': isSuccess, 'msg-failure': !isSuccess }" *ngIf="infoMessage">{{ infoMessage }}</p>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="borrowItem()">Save</button>
+    </div>
+</ng-template>

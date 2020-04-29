@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 15px;
+}
+
+.item {
+    width: 20%;
+    margin: 10px;
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+    position: relative;
+    border: solid;
+    border-color: grey;
+    border-width: 0.5px;
+}
+
+.circle {
+    margin: 20px;
+    position: relative;
+    height: 70px;
+    width: 70px;
+    background-color: grey;
+    border-radius: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.circle:hover {
+    cursor: pointer;
+    background-color: #330000;
+}
+
+.btn-position {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+}
+
+h2 {
+    text-align: center;
+}
+
+.search-borrower {
+    padding-top: 50px;
+    width: 30%;
+    margin: auto;
+}

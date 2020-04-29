@@ -1,0 +1,16 @@
+<ng-template #content let-modal (clickOutside)="closeModal()">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Profile update for {{borrower.firstName}} {{borrower.lastName}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <label for="typeahead-basic">Change card number</label>
+        <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="cardNumber">
+        <p class="msg-success" *ngIf="infoMessage">{{ infoMessage }}</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="updateCardNumber(borrower.borrowerId, cardNumber)">Update</button>
+    </div>
+</ng-template>

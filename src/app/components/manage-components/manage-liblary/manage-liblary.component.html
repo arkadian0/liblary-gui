@@ -1,0 +1,11 @@
+<h2>Manage libary</h2>
+
+<div class="container">
+    <button class="item btn btn-outline-dark" type="button" (click)="openAddItemsComponent()"> Add items</button>
+    <button class="item btn btn-outline-dark" type="button" (click)="openAddBorrowerComponent()">Add borrower</button>
+    <button class="item btn btn-outline-dark" type="button" (click)="openDeleteBorrowerComponent()">Delete borrower</button>
+</div>
+
+<app-add-item *ngIf="showAddItemComponent"></app-add-item>
+<app-add-borrower *ngIf="showAddBorrowerComponent"></app-add-borrower>
+<app-delete-borrower *ngIf="showDeleteBorrowerComponent"></app-delete-borrower>

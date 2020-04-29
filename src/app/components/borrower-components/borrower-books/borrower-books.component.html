@@ -1,0 +1,24 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Boorrowed books for {{borrower.firstName}} {{borrower.lastName}} </h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="container">
+            <div class="item" *ngFor="let book of books ; let index = index">
+                <div class="book-image"><img class="circle center" [src]="'assets/images/book.png'" alt="image"></div>
+                <div class="description">
+                    <p class="center title">{{book.title}}</p>
+                </div>
+                <div class="delete-box"><button type="button" class="btn btn-outline-danger center delete-btn" (click)="deleteBorrowForUser(book,borrower.borrowerId,index)" alt="Delete book for user">X</button></div>
+            </div>
+            <p class="msg-success" *ngIf="infoMessage">{{ infoMessage }}</p>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="closeModal()">OK</button>
+    </div>
+</ng-template>

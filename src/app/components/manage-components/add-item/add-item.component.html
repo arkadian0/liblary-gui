@@ -1,0 +1,88 @@
+<div class="container">
+
+    <ng-select [items]="itemTypes" bindLabel="name" placeholder="Select item" bindValue="id" (change)="changeItem($event)" [(ngModel)]="selectedItem">
+    </ng-select>
+
+    <form *ngIf="showBookForm" (ngSubmit)="submitForBook()">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input [(ngModel)]="templateBook.title" type="text" class="form-control" id="title" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="format">Format</label>
+            <input [(ngModel)]="templateBook.format" type="text" class="form-control" id="format" name="format" required>
+        </div>
+
+        <div class="form-group">
+            <label for="publishingHouse">Publishing house</label>
+            <input [(ngModel)]="templateBook.publishingHouse" type="text" class="form-control" id="publishingHouse" name="publishingHouse" required>
+        </div>
+
+        <div class="form-group">
+            <label for="pageLength">Number of pages</label>
+            <input [(ngModel)]="templateBook.pageLength" type="text" class="form-control" id="pageLength" name="pageLength" required>
+        </div>
+
+        <div class="form-group">
+            <label for="numberOfChapters">Number of chapters</label>
+            <input [(ngModel)]="templateBook.numberOfChapters" type="text" class="form-control" id="numberOfChapters" name="numberOfChapters" required>
+        </div>
+
+        <div class="form-group">
+            <label for="authorFirstName">Author first name</label>
+            <input [(ngModel)]="templateBook.authorFirstName" type="text" class="form-control" id="authorFirstName" name="authorFirstName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="authorLastName">Author last name</label>
+            <input [(ngModel)]="templateBook.authorLastName" type="text" class="form-control" id="authorLastName" name="authorLastName" required>
+        </div>
+
+        <div class="form-group">
+            <label for="releaseDate">release </label>
+            <input [(ngModel)]="templateBook.releaseDate" type="text" class="form-control" id="releaseDate" name="releaseDate" required placeholder="YYYY-MM-DD">
+        </div>
+
+        <p [ngClass]="{'msg-success': isSuccess, 'msg-failure': !isSuccess }" *ngIf="infoMessage">{{ infoMessage }}</p>
+
+        <button type="submit" class="btn btn-dark">Create</button>
+
+    </form>
+
+    <form *ngIf="showNewspaperForm" (ngSubmit)="submitForNewspapers()">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input [(ngModel)]="templateNewspaper.title" type="text" class="form-control" id="title" name="title" required>
+        </div>
+
+        <div class="form-group">
+            <label for="format">Format</label>
+            <input [(ngModel)]="templateNewspaper.format" type="text" class="form-control" id="format" name="format" required>
+        </div>
+
+        <div class="form-group">
+            <label for="publishingHouse">Publishing house</label>
+            <input [(ngModel)]="templateNewspaper.publishingHouse" type="text" class="form-control" id="publishingHouse" name="publishingHouse" required>
+        </div>
+
+        <div class="form-group">
+            <label for="pageLength">Number of pages</label>
+            <input [(ngModel)]="templateNewspaper.pageLength" type="text" class="form-control" id="pageLength" name="pageLength" required>
+        </div>
+
+        <div class="form-group">
+            <label for="releaseDate">Release date </label>
+            <input [(ngModel)]="templateNewspaper.releaseDate" type="text" class="form-control" id="releaseDate" name="releaseDate" required placeholder="YYYY-MM-DD">
+        </div>
+
+        <ng-select [items]="periodicTypes" bindLabel="id" placeholder="Select item" bindValue="id" [(ngModel)]="templateNewspaper.periodicType" id="periodicType" name="periodicType">
+        </ng-select>
+
+
+        <p [ngClass]="{'msg-success': isSuccess, 'msg-failure': !isSuccess }" *ngIf="infoMessage">{{ infoMessage }}</p>
+
+        <button type="submit" class="btn btn-dark">Create</button>
+
+    </form>
+</div>

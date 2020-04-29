@@ -1,0 +1,21 @@
+<h2>
+    Borrowers in liblary system</h2>
+
+<div class="search-borrower">
+    <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#x26B2; Start searching borrower">
+</div>
+
+<div class="container">
+    <div *ngFor="let borrower of borrowers | filter:searchText" class="item">
+        <img class="circle" [src]="'assets/images/user.png'" alt="image">
+        <p class="text-center">{{borrower.firstName}} {{borrower.lastName}}</p>
+        <p class="text-center">Card number : {{borrower.cardNumber}}</p>
+        <button type="button" class="btn btn-link btn-position" (click)="showBooksModal(borrower)"> Books</button>
+        <button type="button" class="btn btn-link btn-position" (click)="showNewspapersModal(borrower)">Newspapers</button>
+        <button type="button" class="btn btn-default btn-position" (click)="showEditModal(borrower)">Edit</button>
+    </div>
+</div>
+
+<app-borrower-books *ngIf="showBorrowerBooksModal" [borrower]="transferBorrower" (modalClosed)="closeBorrowerBooksModal($event)"></app-borrower-books>
+<app-borrower-newspapers *ngIf="showBorroweNewspapersModal" [borrower]="transferBorrower" (modalClosed)="closeBorrowerNewspapersModal($event)"></app-borrower-newspapers>
+<app-borrower-edit *ngIf="showBorowerEditModal" [borrower]="transferBorrower" (modalClosed)="closeBorrowerEditModal($event)"></app-borrower-edit>

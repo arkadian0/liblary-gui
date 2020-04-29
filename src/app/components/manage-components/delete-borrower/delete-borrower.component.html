@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="modal-body">
+        <ng-select required [items]="borrowers" bindLabel="firstName" bindValue="borrowerId" [(ngModel)]="selectedBorrowerId" name="userSelect" placeholder="Choose borrower">
+            <ng-template ng-label-tmp let-item="item">
+                {{item.firstName}} {{item.lastName}} ({{item.cardNumber}})
+            </ng-template>
+            <ng-template ng-option-tmp let-item="item" let-search="searchTerm">
+                {{item.borrowerId}}. {{item.firstName}} {{item.lastName}} ({{item.cardNumber}})
+            </ng-template>
+        </ng-select>
+        <p [ngClass]="{'msg-success': isSuccess, 'msg-failure': !isSuccess }" *ngIf="infoMessage">{{ infoMessage }}</p>
+        <button type="submit" class="btn btn-dark" (click)="deleteBorrower()">Delete</button>
+    </div>
+</div>
