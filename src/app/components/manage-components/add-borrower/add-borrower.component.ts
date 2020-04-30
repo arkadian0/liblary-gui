@@ -20,13 +20,17 @@ export class AddBorrowerComponent implements OnInit {
 
   submit() {
     this.borrowerRestService.createBorrowers([this.templateBorrower]).subscribe(res => {
-      if (res.status == 201)
-        this.showAndCloseSuccessMessage("Borrower created correctly");
+      if (res.status == 201) {
+        this.isSuccess = true;
+        this.showMessageByTime("Borrower created correctly");
+      }
+    }, (error) => {
+      this.isSuccess = false;
+      this.infoMessage = "Problem occured";
     });
   }
 
-  showAndCloseSuccessMessage(message) {
-    this.isSuccess = true;
+  showMessageByTime(message) {
     this.infoMessage = message
     setTimeout(() => {
       this.infoMessage = null;

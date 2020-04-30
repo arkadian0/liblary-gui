@@ -55,6 +55,11 @@
     font-size: 20px;
 }
 
+.msg-failure {
+    color: red;
+    font-size: 20px;
+}
+
 .delete-box {
     width: 80px;
 }

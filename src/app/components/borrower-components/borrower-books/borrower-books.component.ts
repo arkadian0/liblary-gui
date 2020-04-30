@@ -16,6 +16,7 @@ export class BorrowerBooksComponent implements OnInit {
   @Output() modalClosed = new EventEmitter<boolean>();
   @Input() borrower: BorrowerDto;
   infoMessage: string;
+  isSuccess = false;
   books: BookDto[] = [];
 
   constructor(private modalService: NgbModal, private brrowRestService: BorrowRestService, private borrowerRestService: BorrowerRestService) { }
@@ -42,17 +43,20 @@ export class BorrowerBooksComponent implements OnInit {
 
   deleteBorrowForUser(book: BookDto, borrowerId: number, index: number) {
     this.brrowRestService.deleteBorrowForBorrower(borrowerId, book.bookId).subscribe(res => {
-      if (res.status == 200) {
-        this.books.splice(index, 1);
-        this.showAndCloseSuccessMessage(book);
-      }
-    });
-  }
-
-  showAndCloseSuccessMessage(book: BookDto) {
-    this.infoMessage = "Book " + book.title + " deleted correctly";
-    setTimeout(() => {
-      this.infoMessage = null;
-    }, 3000);
-  }
+        if (res.status == 201) {
+          this.books.splice(index, 1);
+          this.isSuccess = true;
+          this.showMessageByTime("Borrow deleted correctly");
+        }
+      }, (error) => {
+        this.infoMessage = "Problem occured";
+      });
+    }
+  
+    showMessageByTime(message) {
+      this.infoMessage = message
+      setTimeout(() => {
+        this.infoMessage = null;
+      }, 3000);
+    }
 }

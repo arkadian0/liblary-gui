@@ -24,20 +24,23 @@ export class DeleteBorrowerComponent implements OnInit {
 
   deleteBorrower() {
     this.borrowerRestService.deleteBorrower(this.selectedBorrowerId).subscribe(res => {
-      if (res.status == 200) {
-        this.borrowers.splice(1, 1);
-        this.showAndCloseSuccessMessage("Borrower deleted correctly");
-      }
-    })
-  }
-
-  showAndCloseSuccessMessage(message) {
-    this.isSuccess = true;
-    this.infoMessage = message;
-    setTimeout(() => {
-      this.infoMessage = null;
-    }, 3000);
-  }
+        if (res.status == 200) {
+          this.borrowers.splice(1, 1);
+          this.isSuccess = true;
+          this.showMessageByTime("Borrower deleted correctly");
+        }
+      }, (error) => {
+        this.isSuccess = false;
+        this.infoMessage = "Problem occured";
+      });
+    }
+  
+    showMessageByTime(message) {
+      this.infoMessage = message
+      setTimeout(() => {
+        this.infoMessage = null;
+      }, 3000);
+    }
 
 
 }

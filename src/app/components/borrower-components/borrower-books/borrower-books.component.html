@@ -14,7 +14,7 @@
                 </div>
                 <div class="delete-box"><button type="button" class="btn btn-outline-danger center delete-btn" (click)="deleteBorrowForUser(book,borrower.borrowerId,index)" alt="Delete book for user">X</button></div>
             </div>
-            <p class="msg-success" *ngIf="infoMessage">{{ infoMessage }}</p>
+            <p [ngClass]="{'msg-success': isSuccess, 'msg-failure': !isSuccess }" *ngIf="infoMessage">{{ infoMessage}}</p>
 
         </div>
     </div>

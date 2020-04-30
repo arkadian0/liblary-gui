@@ -46,20 +46,19 @@ export class BorrowModalComponent implements OnInit {
     if (this.selectedBorrowerId) {
       this.borrowRestService.borrowItem(this.selectedBorrowerId, this.item.itemId).subscribe(res => {
         if (res.status == 201) {
-          this.showAndCloseSuccessMessage();
+          this.isSuccess = true;
+          this.showMessageByTime("Newspaper borrower correctly");
         }
+      }, (error) => {
+        this.infoMessage = "Problem occured";
       });
-    } else {
-      this.infoMessage = "Please check any value";
-      this.isSuccess = false;
     }
   }
-
-  showAndCloseSuccessMessage() {
-    this.isSuccess = true;
-    this.infoMessage = "Item borrowerd correctly";
-    setTimeout(() => {
-      this.infoMessage = null;
-    }, 3000);
-  }
+  
+    showMessageByTime(message) {
+      this.infoMessage = message
+      setTimeout(() => {
+        this.infoMessage = null;
+      }, 3000);
+    }
 }

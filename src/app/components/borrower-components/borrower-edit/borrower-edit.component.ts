@@ -15,6 +15,7 @@ export class BorrowerEditComponent implements OnInit {
   @Input() borrower: BorrowerDto;
   cardNumber: number;
   infoMessage: string;
+  isSuccess = false;
   constructor(private modalService: NgbModal, private borrowerRestService: BorrowerRestService) { }
 
 
@@ -38,13 +39,16 @@ export class BorrowerEditComponent implements OnInit {
   updateCardNumber(borrowerId: number, cardNumber: number) {
     this.borrowerRestService.updateBorrowerCardNumber(borrowerId, cardNumber).subscribe(res => {
       if (res.status == 200) {
-        this.showAndCloseSuccessMessage();
+        this.isSuccess = true;
+        this.showMessageByTime("Borrow deleted correctly");
       }
+    }, (error) => {
+      this.infoMessage = "Problem occured";
     });
   }
 
-  showAndCloseSuccessMessage() {
-    this.infoMessage = "Card number updated correctly";
+  showMessageByTime(message) {
+    this.infoMessage = message
     setTimeout(() => {
       this.infoMessage = null;
     }, 3000);

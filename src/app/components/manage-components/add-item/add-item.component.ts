@@ -51,22 +51,30 @@ export class AddItemComponent implements OnInit {
   submitForBook() {
     this.itemRestService.addBooks([this.templateBook]).subscribe(res => {
       if (res.status == 201) {
-        this.showAndCloseSuccessMessage('Book created correctly');
+        this.isSuccess = true;
+        this.showMessageByTime("Book created correctly");
       }
+    }, (error) => {
+      this.isSuccess = false;
+      this.showMessageByTime("Problem occured");
     });
   }
+
 
   submitForNewspapers() {
     this.itemRestService.addNewspapers([this.templateNewspaper]).subscribe(res => {
       if (res.status == 201) {
-        this.showAndCloseSuccessMessage('Newspaper created correctly');
+        this.isSuccess = true;
+        this.showMessageByTime("Newspaper created correctly");
       }
+    }, (error) => {
+      this.isSuccess = false;
+      this.infoMessage = "Problem occured";
     });
   }
 
-  showAndCloseSuccessMessage(message) {
-    this.isSuccess = true;
-    this.infoMessage = message;
+  showMessageByTime(message) {
+    this.infoMessage = message
     setTimeout(() => {
       this.infoMessage = null;
     }, 3000);
