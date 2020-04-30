@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, Output, ElementRef, EventEmitter, Input } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
-import { BorrowerDto } from 'src/app/models/borrower.model';
 import { NewspaperDto } from 'src/app/models/newspaper.model';
 import { BorrowRestService } from 'src/app/services/borrow-rest.service';
 import { ItemRestService } from 'src/app/services/item-rest.service';
+import { BorrowerDto } from 'src/app/models/borrower.model';
 
 @Component({
   selector: 'app-borrower-newspapers',
