@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ItemType } from 'src/app/enums/item-type-enum';
 import { PediodType } from 'src/app/enums/period-type-enum';
 import { BookDto } from 'src/app/models/book.model';
 import { NewspaperDto } from 'src/app/models/newspaper.model';
 import { ItemRestService } from 'src/app/services/item-rest.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
   styleUrls: ['./add-item.component.css']
 })
-export class AddItemComponent implements OnInit {
+export class AddItemComponent implements OnInit, OnDestroy{
 
   itemTypes = [
     { id: ItemType.BOOK, name: 'Book' },
@@ -25,14 +26,21 @@ export class AddItemComponent implements OnInit {
 
   templateBook = <BookDto>{};
   templateNewspaper = <NewspaperDto>{};
+
   showBookForm = false;
   showNewspaperForm = false;
 
   isSuccess = false;
-  infoMessage;
-  selectedItem;
+  infoMessage: string;
+  selectedItem: boolean;
+
+  subscription = new Subscription();
 
   constructor(private itemRestService: ItemRestService) { }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   ngOnInit(): void {
   }
@@ -49,7 +57,7 @@ export class AddItemComponent implements OnInit {
   }
 
   submitForBook() {
-    this.itemRestService.addBooks([this.templateBook]).subscribe(res => {
+    this.subscription.add(this.itemRestService.addBooks([this.templateBook]).subscribe(res => {
       if (res.status == 201) {
         this.isSuccess = true;
         this.showMessageByTime("Book created correctly");
@@ -57,7 +65,7 @@ export class AddItemComponent implements OnInit {
     }, (error) => {
       this.isSuccess = false;
       this.showMessageByTime("Problem occured");
-    });
+    }));
   }
 
 

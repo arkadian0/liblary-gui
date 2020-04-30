@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
 import { BorrowerDto } from 'src/app/models/borrower.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-delete-borrower',
   templateUrl: './delete-borrower.component.html',
   styleUrls: ['./delete-borrower.component.css']
 })
-export class DeleteBorrowerComponent implements OnInit {
+export class DeleteBorrowerComponent implements OnInit, OnDestroy {
 
   constructor(private borrowerRestService: BorrowerRestService) { }
+ 
 
   selectedBorrowerId: number;
   infoMessage: string;
-  isSuccess;
+  isSuccess: boolean;
   borrowers: BorrowerDto[] = [];
+
+  subscription = new Subscription();
 
   ngOnInit(): void {
     this.borrowerRestService.getAllBorrowers().subscribe(fetchData => {
@@ -22,8 +26,12 @@ export class DeleteBorrowerComponent implements OnInit {
     })
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   deleteBorrower() {
-    this.borrowerRestService.deleteBorrower(this.selectedBorrowerId).subscribe(res => {
+    this.subscription.add(this.borrowerRestService.deleteBorrower(this.selectedBorrowerId).subscribe(res => {
         if (res.status == 200) {
           this.borrowers.splice(1, 1);
           this.isSuccess = true;
@@ -32,7 +40,7 @@ export class DeleteBorrowerComponent implements OnInit {
       }, (error) => {
         this.isSuccess = false;
         this.infoMessage = "Problem occured";
-      });
+      }));
     }
   
     showMessageByTime(message) {

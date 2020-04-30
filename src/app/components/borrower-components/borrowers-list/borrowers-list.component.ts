@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BorrowerDto } from 'src/app/models/borrower.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-borrowers-list',
   templateUrl: './borrowers-list.component.html',
   styleUrls: ['./borrowers-list.component.css']
 })
-export class BorrowersListComponent implements OnInit {
+export class BorrowersListComponent implements OnInit, OnDestroy {
 
   showBorrowerBooksModal = false;
   showBorroweNewspapersModal = false;
@@ -18,13 +19,17 @@ export class BorrowersListComponent implements OnInit {
   searchText: string;
   borrowers: BorrowerDto[] = [];
   transferBorrower: BorrowerDto;
-
+  subscription = new Subscription();
   constructor(private borrowerRestService: BorrowerRestService, private modalService: NgbModal) { }
 
+  ngOnDestroy(): void {
+    throw new Error("Method not implemented.");
+  }
+
   ngOnInit(): void {
-    this.borrowerRestService.getAllBorrowers().subscribe(fetchData => {
+    this.subscription.add(this.borrowerRestService.getAllBorrowers().subscribe(fetchData => {
       this.borrowers = fetchData;
-    })
+    }));
   }
 
   closeBorrowerBooksModal(event) {

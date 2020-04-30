@@ -1,0 +1,12 @@
+<h2>Borrow newspapers </h2>
+<div class="container">
+    <div class="item" *ngFor="let newspaper of newspapers">
+        <div class="newspaper-image"><img class="circle center" src="'assets/images/newspaper.png'" alt="image"></div>
+        <div class="description">
+            <p class="center title">{{newspaper.title}}</p>
+        </div>
+        <div class="borrow-box"><button type="button" class="btn btn-outline-dark center borrow-btn" (click)="showModal(newspaper.title, newspaper.newspaperId)">Borrow</button></div>
+    </div>
+</div>
+
+<app-borrow-modal *ngIf="showBorrowModal" [item]="item" (modalClosed)="closeBorrowModal($event)"></app-borrow-modal>

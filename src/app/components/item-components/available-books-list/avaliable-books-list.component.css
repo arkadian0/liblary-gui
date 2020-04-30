@@ -2,11 +2,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 50px;
+}
+
+h2 {
+    text-align: center;
 }
 
 .item {
     height: 80px;
-    width: 100%;
+    width: 50%;
     margin-bottom: 10px;
     border: gray;
     border-style: solid;
@@ -50,10 +55,10 @@
     font-weight: bold;
 }
 
-.delete-box {
-    width: 80px;
+.borrow-box {
+    width: 100px;
 }
 
-.delete-btn {
+.borrow-btn {
     position: relative;
 }

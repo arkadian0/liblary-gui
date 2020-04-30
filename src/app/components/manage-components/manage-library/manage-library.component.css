@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding: 15px;
+    width: 100%;
+}
+
+.item {
+    width: 20%;
+    margin: 10px;
+    padding-bottom: 2%;
+    margin-bottom: 2%;
+    position: relative;
+    border: solid;
+    border-color: grey;
+    border-width: 0.5px;
+}
+
+h2 {
+    text-align: center;
+}

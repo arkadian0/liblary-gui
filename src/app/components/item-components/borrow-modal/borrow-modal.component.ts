@@ -4,6 +4,7 @@ import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
 import { ItemDto } from 'src/app/models/item.model';
 import { BorrowerDto } from 'src/app/models/borrower.model';
 import { BorrowRestService } from 'src/app/services/borrow-rest.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-borrow-modal',
@@ -19,14 +20,16 @@ export class BorrowModalComponent implements OnInit {
   borrowers: BorrowerDto[] = [];
   selectedBorrowerId: number;
   infoMessage: string;
-  isSuccess;
+  isSuccess: boolean;
+
+  subscription = new Subscription();
 
   constructor(private modalService: NgbModal, private borrowRestService: BorrowRestService, private borrowerRestService: BorrowerRestService) { }
 
   ngOnInit(): void {
-    this.borrowerRestService.getAllBorrowers().subscribe(fetchData => {
+    this.subscription.add(this.borrowerRestService.getAllBorrowers().subscribe(fetchData => {
       this.borrowers = fetchData;
-    })
+    }));
   }
 
   ngAfterViewInit() {
@@ -44,14 +47,14 @@ export class BorrowModalComponent implements OnInit {
 
   borrowItem() {
     if (this.selectedBorrowerId) {
-      this.borrowRestService.borrowItem(this.selectedBorrowerId, this.item.itemId).subscribe(res => {
+      this.subscription.add(this.borrowRestService.borrowItem(this.selectedBorrowerId, this.item.itemId).subscribe(res => {
         if (res.status == 201) {
           this.isSuccess = true;
           this.showMessageByTime("Newspaper borrower correctly");
         }
       }, (error) => {
         this.infoMessage = "Problem occured";
-      });
+      }));
     }
   }
   

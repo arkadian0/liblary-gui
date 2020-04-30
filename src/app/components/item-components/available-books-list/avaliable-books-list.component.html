@@ -1,0 +1,12 @@
+<h2>Borrow books </h2>
+<div class="container">
+    <div class="item" *ngFor="let book of books">
+        <div class="book-image"><img class="circle center" src="'assets/images/book.png'" alt="image"></div>
+        <div class="description">
+            <p class="center title">{{book.title}}</p>
+        </div>
+        <div class="borrow-box"><button type="button" class="btn btn-outline-dark center borrow-btn" (click)="showModal(book.title, book.bookId)">Borrow</button></div>
+    </div>
+</div>
+
+<app-borrow-modal *ngIf="showBorrowModal" [item]="item" (modalClosed)="closeBorrowModal($event)"></app-borrow-modal>
