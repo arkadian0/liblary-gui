@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, ViewChild, ElementRef, EventEmitter, Input } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { BorrowerDto } from 'src/app/services/transfer/transfer-interfaces';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
+import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
+import { BorrowerDto } from 'src/app/models/borrower.model';
 
 @Component({
   selector: 'app-borrower-edit',
@@ -15,7 +15,7 @@ export class BorrowerEditComponent implements OnInit {
   @Input() borrower: BorrowerDto;
   cardNumber: number;
   infoMessage: string;
-  constructor(private modalService: NgbModal, private liblaryRestService: LiblaryRestService) { }
+  constructor(private modalService: NgbModal, private borrowerRestService: BorrowerRestService) { }
 
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class BorrowerEditComponent implements OnInit {
   }
 
   updateCardNumber(borrowerId: number, cardNumber: number) {
-    this.liblaryRestService.updateBorrowerCardNumber(borrowerId, cardNumber).subscribe(res => {
+    this.borrowerRestService.updateBorrowerCardNumber(borrowerId, cardNumber).subscribe(res => {
       if (res.status == 200) {
         this.showAndCloseSuccessMessage();
       }

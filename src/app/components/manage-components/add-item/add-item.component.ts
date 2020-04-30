@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
-import { BookDto, NewspaperDto } from 'src/app/services/transfer/transfer-interfaces';
 import { ItemType } from 'src/app/enums/item-type-enum';
 import { PediodType } from 'src/app/enums/period-type-enum';
-import { TemplateBook } from 'src/app/models/book.template';
-import { TemplateNewspaper } from 'src/app/models/item.template';
+import { BookDto } from 'src/app/models/book.model';
+import { NewspaperDto } from 'src/app/models/newspaper.model';
+import { ItemRestService } from 'src/app/services/item-rest.service';
+
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
@@ -23,8 +23,8 @@ export class AddItemComponent implements OnInit {
     { id: PediodType.MONTHLY }
   ]
 
-  templateBook = <TemplateBook>{};
-  templateNewspaper = <TemplateNewspaper>{};
+  templateBook = <BookDto>{};
+  templateNewspaper = <NewspaperDto>{};
   showBookForm = false;
   showNewspaperForm = false;
 
@@ -32,7 +32,7 @@ export class AddItemComponent implements OnInit {
   infoMessage;
   selectedItem;
 
-  constructor(private liblaryRestService: LiblaryRestService) { }
+  constructor(private itemRestService: ItemRestService) { }
 
   ngOnInit(): void {
   }
@@ -49,8 +49,7 @@ export class AddItemComponent implements OnInit {
   }
 
   submitForBook() {
-    const bookDto = this.createBookDtoByTemplate(this.templateBook);
-    this.liblaryRestService.addBooks([bookDto]).subscribe(res => {
+    this.itemRestService.addBooks([this.templateBook]).subscribe(res => {
       if (res.status == 201) {
         this.showAndCloseSuccessMessage('Book created correctly');
       }
@@ -58,25 +57,12 @@ export class AddItemComponent implements OnInit {
   }
 
   submitForNewspapers() {
-    const newspaperDto = this.createNewspaperDtoByTemplate(this.templateNewspaper);
-    this.liblaryRestService.addNewspapers([newspaperDto]).subscribe(res => {
+    this.itemRestService.addNewspapers([this.templateNewspaper]).subscribe(res => {
       if (res.status == 201) {
         this.showAndCloseSuccessMessage('Newspaper created correctly');
       }
     });
   }
-
-  createNewspaperDtoByTemplate(templateNewspaper: TemplateNewspaper) {
-    const newspaperDto = <NewspaperDto>{};
-    newspaperDto.format = templateNewspaper.format;
-    newspaperDto.releaseDate = templateNewspaper.releaseDate;
-    newspaperDto.pageLength = templateNewspaper.pageLength;
-    newspaperDto.publishingHouse = templateNewspaper.publishingHouse;
-    newspaperDto.title = templateNewspaper.title;
-    newspaperDto.periodicType = templateNewspaper.periodicType;
-    return newspaperDto;
-  }
-
 
   showAndCloseSuccessMessage(message) {
     this.isSuccess = true;
@@ -86,18 +72,6 @@ export class AddItemComponent implements OnInit {
     }, 3000);
   }
 
-  createBookDtoByTemplate(templateBook: TemplateBook): any {
-    const bookDto = <BookDto>{};
-    bookDto.authorFirstName = templateBook.authorFirstName;
-    bookDto.authorLastName = templateBook.authorLastName;
-    bookDto.format = templateBook.format;
-    bookDto.releaseDate = templateBook.releaseDate;
-    bookDto.numberOfChapters = templateBook.numberOfChapters;
-    bookDto.pageLength = templateBook.pageLength;
-    bookDto.publishingHouse = templateBook.publishingHouse;
-    bookDto.title = templateBook.title;
-    return bookDto;
-  }
 }
 
 

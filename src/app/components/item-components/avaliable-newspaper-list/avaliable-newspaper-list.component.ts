@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
-import { BookDto, NewspaperDto, ItemDto } from 'src/app/services/transfer/transfer-interfaces';
+import { NewspaperDto } from 'src/app/models/newspaper.model';
+import { ItemDto } from 'src/app/models/item.model';
+import { ItemRestService } from 'src/app/services/item-rest.service';
 
 @Component({
   selector: 'app-avaliable-newspaper-list',
@@ -9,14 +10,14 @@ import { BookDto, NewspaperDto, ItemDto } from 'src/app/services/transfer/transf
 })
 export class AvaliableNewspaperListComponent implements OnInit {
 
-  constructor(private liblaryRestService: LiblaryRestService) { }
+  constructor(private itemRestService: ItemRestService) { }
 
   newspapers: NewspaperDto[] = [];
   showBorrowModal = false;
   item: ItemDto;
 
   ngOnInit(): void {
-    this.liblaryRestService.getAllNewspapers().subscribe(fetchData => {
+    this.itemRestService.getAllNewspapers().subscribe(fetchData => {
       this.newspapers = fetchData;
     })
   }

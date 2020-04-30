@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BorrowerDto } from 'src/app/services/transfer/transfer-interfaces';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
+import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BorrowerDto } from 'src/app/models/borrower.model';
 
 @Component({
   selector: 'app-borrowers-list',
@@ -19,10 +19,10 @@ export class BorrowersListComponent implements OnInit {
   borrowers: BorrowerDto[] = [];
   transferBorrower: BorrowerDto;
 
-  constructor(private liblaryRestService: LiblaryRestService, private modalService: NgbModal) { }
+  constructor(private borrowerRestService: BorrowerRestService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.liblaryRestService.getAllBorrowers().subscribe(fetchData => {
+    this.borrowerRestService.getAllBorrowers().subscribe(fetchData => {
       this.borrowers = fetchData;
     })
   }

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BookDto, ItemDto } from 'src/app/services/transfer/transfer-interfaces';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { preserveWhitespacesDefault } from '@angular/compiler';
+import { BookDto } from 'src/app/models/book.model';
+import { ItemDto } from 'src/app/models/item.model';
+import { ItemRestService } from 'src/app/services/item-rest.service';
 
 @Component({
   selector: 'app-avaliable-books-list',
@@ -11,14 +10,14 @@ import { preserveWhitespacesDefault } from '@angular/compiler';
 })
 export class AvaliableBooksListComponent implements OnInit {
 
-  constructor(private liblaryRestService: LiblaryRestService) { }
+  constructor(private itemRestService: ItemRestService) { }
 
   books: BookDto[] = [];
   showBorrowModal = false;
   item: ItemDto;
 
   ngOnInit(): void {
-    this.liblaryRestService.getAllBooks().subscribe(fetchData => {
+    this.itemRestService.getAllBooks().subscribe(fetchData => {
       this.books = fetchData;
     })
   }
@@ -27,6 +26,7 @@ export class AvaliableBooksListComponent implements OnInit {
     if (event == true)
       this.showBorrowModal = false;
   }
+
   showModal(title: string, bookId: number) {
     this.item = { title: title, itemId: bookId }
     this.showBorrowModal = true;

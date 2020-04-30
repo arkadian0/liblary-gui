@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { BorrowerDto, BookDto } from 'src/app/services/transfer/transfer-interfaces';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
+import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
+import { BookDto } from 'src/app/models/book.model';
+import { BorrowerDto } from 'src/app/models/borrower.model';
+import { BorrowRestService } from 'src/app/services/borrow-rest.service';
 
 @Component({
   selector: 'app-borrower-books',
@@ -15,11 +17,12 @@ export class BorrowerBooksComponent implements OnInit {
   @Input() borrower: BorrowerDto;
   infoMessage: string;
   books: BookDto[] = [];
-  constructor(private modalService: NgbModal, private liblaryRestService: LiblaryRestService) { }
+
+  constructor(private modalService: NgbModal, private brrowRestService: BorrowRestService, private borrowerRestService: BorrowerRestService) { }
 
 
   ngOnInit(): void {
-    this.liblaryRestService.getAllBooksForBorrower(this.borrower.borrowerId).subscribe(fetchData => {
+    this.borrowerRestService.getAllBooksForBorrower(this.borrower.borrowerId).subscribe(fetchData => {
       this.books = fetchData;
     })
   }
@@ -38,7 +41,7 @@ export class BorrowerBooksComponent implements OnInit {
   }
 
   deleteBorrowForUser(book: BookDto, borrowerId: number, index: number) {
-    this.liblaryRestService.deleteBorrowForBorrower(borrowerId, book.bookId).subscribe(res => {
+    this.brrowRestService.deleteBorrowForBorrower(borrowerId, book.bookId).subscribe(res => {
       if (res.status == 200) {
         this.books.splice(index, 1);
         this.showAndCloseSuccessMessage(book);

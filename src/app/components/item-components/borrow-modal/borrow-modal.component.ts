@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter, Input } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { BorrowerDto, ItemDto } from 'src/app/services/transfer/transfer-interfaces';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
+import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
+import { ItemDto } from 'src/app/models/item.model';
+import { BorrowerDto } from 'src/app/models/borrower.model';
+import { BorrowRestService } from 'src/app/services/borrow-rest.service';
 
 @Component({
   selector: 'app-borrow-modal',
@@ -19,10 +21,10 @@ export class BorrowModalComponent implements OnInit {
   infoMessage: string;
   isSuccess;
 
-  constructor(private modalService: NgbModal, private liblaryRestService: LiblaryRestService) { }
+  constructor(private modalService: NgbModal, private borrowRestService: BorrowRestService, private borrowerRestService: BorrowerRestService) { }
 
   ngOnInit(): void {
-    this.liblaryRestService.getAllBorrowers().subscribe(fetchData => {
+    this.borrowerRestService.getAllBorrowers().subscribe(fetchData => {
       this.borrowers = fetchData;
     })
   }
@@ -42,7 +44,7 @@ export class BorrowModalComponent implements OnInit {
 
   borrowItem() {
     if (this.selectedBorrowerId) {
-      this.liblaryRestService.borrowItem(this.selectedBorrowerId, this.item.itemId).subscribe(res => {
+      this.borrowRestService.borrowItem(this.selectedBorrowerId, this.item.itemId).subscribe(res => {
         if (res.status == 201) {
           this.showAndCloseSuccessMessage();
         }

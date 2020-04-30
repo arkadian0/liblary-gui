@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild, Output, ElementRef, EventEmitter, Input } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
-import { NewspaperDto, BorrowerDto } from 'src/app/services/transfer/transfer-interfaces';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
+import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
+import { BorrowerDto } from 'src/app/models/borrower.model';
+import { NewspaperDto } from 'src/app/models/newspaper.model';
+import { BorrowRestService } from 'src/app/services/borrow-rest.service';
+import { ItemRestService } from 'src/app/services/item-rest.service';
 
 @Component({
   selector: 'app-borrower-newspapers',
@@ -15,11 +18,11 @@ export class BorrowerNewspapersComponent implements OnInit {
   @Input() borrower: BorrowerDto;
   infoMessage: string;
   newspapers: NewspaperDto[] = [];
-  constructor(private modalService: NgbModal, private liblaryRestService: LiblaryRestService) { }
+  constructor(private modalService: NgbModal, private borrowRestService: BorrowRestService, private borrowerRestService: BorrowerRestService) { }
 
 
   ngOnInit(): void {
-    this.liblaryRestService.getAllNewspapersBorrower(this.borrower.borrowerId).subscribe(fetchData => {
+    this.borrowerRestService.getAllNewspapersBorrower(this.borrower.borrowerId).subscribe(fetchData => {
       this.newspapers = fetchData;
     })
   }
@@ -38,7 +41,7 @@ export class BorrowerNewspapersComponent implements OnInit {
   }
 
   deleteBorrowForUser(newspaper: NewspaperDto, borrowerId: number, index: number) {
-    this.liblaryRestService.deleteBorrowForBorrower(borrowerId, newspaper.newspaperId).subscribe(res => {
+    this.borrowRestService.deleteBorrowForBorrower(borrowerId, newspaper.newspaperId).subscribe(res => {
       if (res.status == 200) {
         this.newspapers.splice(index, 1);
         this.showAndCloseSuccessMessage(newspaper);

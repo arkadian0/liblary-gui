@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
-import { BorrowerDto } from 'src/app/services/transfer/transfer-interfaces';
+import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
+import { BorrowerDto } from 'src/app/models/borrower.model';
 
 @Component({
   selector: 'app-delete-borrower',
@@ -9,7 +9,7 @@ import { BorrowerDto } from 'src/app/services/transfer/transfer-interfaces';
 })
 export class DeleteBorrowerComponent implements OnInit {
 
-  constructor(private liblaryRestService: LiblaryRestService) { }
+  constructor(private borrowerRestService: BorrowerRestService) { }
 
   selectedBorrowerId: number;
   infoMessage: string;
@@ -17,20 +17,20 @@ export class DeleteBorrowerComponent implements OnInit {
   borrowers: BorrowerDto[] = [];
 
   ngOnInit(): void {
-    this.liblaryRestService.getAllBorrowers().subscribe(fetchData => {
+    this.borrowerRestService.getAllBorrowers().subscribe(fetchData => {
       this.borrowers = fetchData;
     })
   }
 
   deleteBorrower() {
-    this.liblaryRestService.deleteBorrower(this.selectedBorrowerId).subscribe(res => {
-      if (res.status == 200){
+    this.borrowerRestService.deleteBorrower(this.selectedBorrowerId).subscribe(res => {
+      if (res.status == 200) {
         this.borrowers.splice(1, 1);
         this.showAndCloseSuccessMessage("Borrower deleted correctly");
       }
-
     })
   }
+
   showAndCloseSuccessMessage(message) {
     this.isSuccess = true;
     this.infoMessage = message;

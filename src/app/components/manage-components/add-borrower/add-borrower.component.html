@@ -17,7 +17,7 @@
             <input [(ngModel)]="templateBorrower.cardNumber" type="text" class="form-control" id="cardNumber" name="cardNumber" required>
         </div>
 
-        <p [ngClass]="{'msg-success': isSuccess, 'msg-failure': !isSuccess }" *ngIf="infoMessage">{{ infoMessage }}</p>
+        <p [ngClass]="{'msg-success': isSuccess, 'msg-failure': !isSuccess }" *ngIf="infoMessage">{{ infoMessage}}</p>
 
         <button type="submit" class="btn btn-dark">Create</button>
 

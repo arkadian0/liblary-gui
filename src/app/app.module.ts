@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { LiblaryRestService } from './services/liblary-rest.service';
+import { BorrowerRestService } from './services/borrower-rest.service';
 import { CommonModule } from '@angular/common';
 import { BorrowersListComponent } from './components/borrower-components/borrowers-list/borrowers-list.component';
 import { BorrowerBooksComponent } from './components/borrower-components/borrower-books/borrower-books.component';
@@ -22,6 +22,8 @@ import { AddItemComponent } from './components/manage-components/add-item/add-it
 import { AddBorrowerComponent } from './components/manage-components/add-borrower/add-borrower.component';
 import { DeleteBorrowerComponent } from './components/manage-components/delete-borrower/delete-borrower.component';
 import { ManageLiblaryComponent } from './components/manage-components/manage-liblary/manage-liblary.component';
+import { ItemRestService } from './services/item-rest.service';
+import { BorrowRestService } from './services/borrow-rest.service';
 
 
 @NgModule({
@@ -55,7 +57,7 @@ import { ManageLiblaryComponent } from './components/manage-components/manage-li
     NgbModule,
     NgSelectModule
   ],
-  providers: [LiblaryRestService],
+  providers: [ItemRestService, BorrowRestService, BorrowerRestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

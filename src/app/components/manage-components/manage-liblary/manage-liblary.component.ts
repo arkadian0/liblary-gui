@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
 
 @Component({
   selector: 'app-manage-liblary',

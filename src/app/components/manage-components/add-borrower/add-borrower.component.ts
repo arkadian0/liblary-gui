@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LiblaryRestService } from 'src/app/services/liblary-rest.service';
-import { BorrowerDto } from 'src/app/services/transfer/transfer-interfaces';
-import { TemplateBorrower } from 'src/app/models/borrower.template';
+import { BorrowerDto } from 'src/app/models/borrower.model';
+import { BorrowerRestService } from 'src/app/services/borrower-rest.service';
+
 
 @Component({
   selector: 'app-add-borrower',
@@ -10,22 +10,18 @@ import { TemplateBorrower } from 'src/app/models/borrower.template';
 })
 export class AddBorrowerComponent implements OnInit {
 
-  templateBorrower = <TemplateBorrower>{};;
+  templateBorrower = <BorrowerDto>{};
   isSuccess = false;
   infoMessage;
 
-  constructor(private liblaryRestService: LiblaryRestService) { }
+  constructor(private borrowerRestService: BorrowerRestService) { }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   submit() {
-    const borrowerDto = this.createBorrowerDtoByTemplate(this.templateBorrower);
-    this.liblaryRestService.createBorrowers([borrowerDto]).subscribe(res => {
-      if (res.status == 201) {
+    this.borrowerRestService.createBorrowers([this.templateBorrower]).subscribe(res => {
+      if (res.status == 201)
         this.showAndCloseSuccessMessage("Borrower created correctly");
-      }
     });
   }
 
@@ -35,13 +31,5 @@ export class AddBorrowerComponent implements OnInit {
     setTimeout(() => {
       this.infoMessage = null;
     }, 3000);
-  }
-
-  createBorrowerDtoByTemplate(templateBorrower: TemplateBorrower) {
-    const borrowerDto = <BorrowerDto>{};
-    borrowerDto.cardNumber = templateBorrower.cardNumber;
-    borrowerDto.firstName = templateBorrower.firstName;
-    borrowerDto.lastName = templateBorrower.lastName;
-    return borrowerDto;
   }
 }
